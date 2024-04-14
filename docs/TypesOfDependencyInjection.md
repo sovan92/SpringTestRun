@@ -24,4 +24,67 @@
 - Favor constructor injection over setter injection. 
 - Use final properties for injected components. 
 - Declare properties private final and initialize in the constructor. 
-- Whenever practical don't use injection. 
+- Whenever practical don't use injection.
+
+### How spring needs to wire  up. 
+
+- The primary bean @Primary
+```java
+
+@Service
+@Primary
+public class SetterInjectedMyService implements MyService{
+
+
+    @Override
+    public void serve() {
+        System.out.println("SetterInjectedMyService");
+    }
+}
+
+```
+- Qualifier
+
+```java
+
+@Service("setterInjectedService")
+public class SetterInjectedMyService implements MyService{
+
+
+    @Override
+    public void serve() {
+        System.out.println("SetterInjectedMyService");
+    }
+}
+
+@Controller
+class MyController {
+    
+    
+    MyService service;
+    
+    
+    public void setService(@Qualifier("setterInjectedService") MyService service){
+        this.service = service;
+    }
+    
+    
+    
+}
+
+```
+- Active Profile
+
+```java
+
+
+
+
+
+
+
+
+
+
+
+```
